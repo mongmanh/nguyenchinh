@@ -1,0 +1,51 @@
+<% include ../partials/header %>
+<% include ../partials/navbar %>
+<div class="container-fluid">
+	<di class="row">
+		<div class="col-md-12">
+			<div class="page-header">
+				<h1 class="text-center">Danh sách các supporter</h1>
+			</div>
+		</div>
+	</di>
+	<di class="row">
+		<div class="col-md-12">
+			<table class="table table-striped table-hover">
+				<thead>
+					<tr>
+						<th>#</th>
+						<th>ID</th>
+						<th>Họ tên</th>
+						<th>Email</th>
+						<th>Số điện thoại</th>
+						<th>Loại hỗ trợ</th>
+						<th>Thao tác</th>
+					</tr>
+				</thead>
+				<tbody>
+					<% for( var i = 0; i < data.length; i++){ %>
+						<tr>
+							<td><%= i+1 %></td>
+							<td><%= data[i].id %></td>
+							<td><%= data[i].name %></td>
+							<td><%= data[i].email %></td>
+							<td><%= data[i].phone %></td>
+							<td>
+								<% if( data[i].type == 1){ %>
+									Hỗ trợ tư vấn mua hàng
+								<% }else{ %>
+									Hỗ trợ kỹ thuật
+								<% } %>
+							</td>
+							<td>
+								<a href="/supporter/edit?id=<%= data[i].id %>" title="Sửa" class="edit"><i class="glyphicon glyphicon-pencil"></i>Sửa</a>
+								<a href="/supporter/delete?id=<%= data[i].id %>" title="Sửa" class="delete" onclick="return confirmDelete()"><i class="glyphicon glyphicon-trash"></i> Xóa</a>
+							</td>
+						</tr>
+					<% }%>
+				</tbody>
+			</table>
+		</div>
+	</di>
+</div>
+<% include ../partials/footer %>

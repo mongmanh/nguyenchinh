@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+	<link rel="stylesheet" href="../css/style.css">
+
+	<title>Chat</title>
+</head>
+<body>
+<div class="container" id="chatSP">
+	<div class="page-header">
+		<h1 class="text-center">Hỗ trợ khách hàng</h1>
+	</div>
+	<div class="row">
+		<div class="col-md-6" id="roomChat">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<strong>Phòng</strong>
+				</div>
+				<div class="panel-body">
+					<div class="list-group" id="listRooms">
+					  
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-6" id="boxChatSP">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<strong>Chat</strong>
+				</div>
+				<div class="panel-body group-message">
+					<div id="mgsChat">
+					</div>
+				</div>
+				<div class="inputChat">
+					<input name="" id="chatText" autofocus class="form-control">
+				</div>
+					<input type="hidden" name="userinfo" id="userinfo" value="">
+			</div>
+		</div>
+	</div>
+</div>
+	<script type="text/javascript" src="../js/jquery-3.1.1.min.js"></script>
+	<script type="text/javascript" src="../js/socket.io-1.4.5.js"></script>
+	<script type="text/javascript" src="../js/jquery.validate.min.js"></script>
+	<script type="text/javascript" src="../js/custom.js"></script>
+	<script type="text/javascript" src="../js/chatsp.js"></script>
+</div>
+	
+</body>
+</html>

@@ -1,0 +1,58 @@
+<% include ../partials/header %>
+<% include ../partials/navbar %>
+<div class="container">
+	<div class="row">
+		<div class="col-md-6 col-md-offset-3">
+			<div class="page-header">
+				<h1 class="text-center">Thêm mới supporter</h1>
+			</div>
+			<% if(err == 'none'){ %>
+				<div class="alert alert-danger">
+					<span>Bạn chưa nhập đủ thông tin</span>
+				</div>
+			<% }%>
+			<% if(err == 'email'){ %>
+				<div class="alert alert-danger">
+					<span>Email đã được sử dụng</span>
+				</div>
+			<% }%>
+			<% if(err == 'phone'){ %>
+				<div class="alert alert-danger">
+					<span>Số điện thoại đã được sử dụng</span>
+				</div>
+			<% }%>
+			<form action="" method="post" accept-charset="utf-8">
+				<div class="form-group">
+					<label>Họ tên</label>
+					<input type="text" name="fullname" value="" placeholder="Fullname" class="form-control">
+				</div>
+				<div class="form-group">
+					<label>Giới tính</label>
+					<select class="form-control" name="gender">
+						<option value="Nam">Nam</option>
+						<option value="Nữ">Nữ</option>
+					</select>
+				</div>
+				<div class="form-group">
+					<label>Email</label>
+					<input type="email" name="email" value="" placeholder="Email address" class="form-control">
+				</div>
+				<div class="form-group">
+					<label>Số điện thoại</label>
+					<input type="tel" name="phone" value="" placeholder="Phone number" class="form-control">
+				</div>
+				<div class="form-group">
+					<label>Bộ phận hỗ trợ</label>
+					<select name="type" class="form-control">
+						<option value="1">Tư vấn mua hàng</option>
+						<option value="2">Hỗ trợ kỹ thuật</option>
+					</select>
+				</div>
+				<div class="form-group">
+					<button type="submit" class="btn btn-success"><i class="glyphicon glyphicon-floppy-disk"></i> Lưu lại</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<% include ../partials/footer %>

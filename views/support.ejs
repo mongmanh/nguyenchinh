@@ -1,0 +1,49 @@
+<% include partials/header %>
+<% include partials/navbarsp %>
+	<script>
+
+		<% if(id !=null && email != null) { %>
+			localStorage.supporter = '<%= email %>';
+			localStorage.spId = '<%= id %>';
+			window.location.assign('http://localhost:3000/tu-van-khach-hang');
+		<% } %>
+
+		if(typeof(localStorage.supporter) == 'undefined'){
+			window.location.assign('http://localhost:3000/login');
+		}
+	</script>
+	<div class="container" id="chatSP">
+		<div class="page-header">
+			<h1 class="text-center">Hỗ trợ khách hàng</h1>
+		</div>
+		<div class="row">
+			<div class="col-md-6" id="roomChat">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<strong>Phòng</strong>
+					</div>
+					<div class="panel-body">
+						<div class="list-group" id="listRooms">
+						  
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6" id="boxChatSP">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<strong>Chat <span class="customername"></span></strong>
+					</div>
+					<div class="panel-body group-message">
+						<div id="mgsChat">
+						</div>
+					</div>
+					<div class="inputChat">
+						<input name="" id="chatText" autofocus class="form-control">
+					</div>
+						<input type="hidden" name="userinfo" id="userinfo" value="">
+				</div>
+			</div>
+		</div>
+	</div>
+<% include partials/footer %>
