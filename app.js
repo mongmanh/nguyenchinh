@@ -12,7 +12,7 @@ var conn = mysql.createConnection({
 	host: 'localhost',
 	user: 'root',
 	password: '',
-	database: 'chatsp'			
+	database: 'chat'			
 });
 conn.connect(function(err){
   if(err){
@@ -153,6 +153,28 @@ app.get('/supporter/delete', function(req, res){
 	conn.query('DELETE FROM supporter WHERE id = ?',[id], function(err, rows){
 		if(err) throw err;
 		res.redirect('/supporter/show');
+	});
+});
+app.get('/customer/show', function(req, res){
+
+	conn.query('SELECT * FROM customer',[], function(err, rows){
+		if(err) throw err;
+		res.render('customer/show', {title: 'Show customer', data: rows});
+	});
+});
+
+app.get('/customer/delete', function(req, res){
+	var id = req.query.id;
+	conn.query('DELETE FROM customer WHERE id = ?',[id], function(err, rows){
+		if(err) throw err;
+		res.redirect('/customer/show');
+	});
+});
+
+app.get('/customer/deleteall', function(req, res){
+	conn.query('DELETE FROM customer ',[], function(err, rows){
+		if(err) throw err;
+		res.redirect('/customer/show');
 	});
 });
 
