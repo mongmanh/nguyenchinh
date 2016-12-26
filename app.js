@@ -9,10 +9,10 @@ var port = process.env.PORT || 3000;
 
 var rooms = [];
 var conn = mysql.createConnection({
-	host: 'localhost',
+	host: '127.0.0.1',
 	user: 'root',
 	password: '',
-	database: 'chat'			
+	database: 'chatsupp'			
 });
 conn.connect(function(err){
   if(err){
@@ -21,6 +21,7 @@ conn.connect(function(err){
   }
   console.log('Connection established');
 });
+//khai bao
 // set the view engine to ejs
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname + '/public'));
@@ -117,7 +118,8 @@ app.post('/supporter/edit', function(req, res){
 	var email = req.body.email;
 	var phone = req.body.phone;
 	var type = req.body.type;
-
+	console.log('===abc=========');
+	console.log(gender);
 	if(fullname && email && phone && type){
 
 		conn.query('SELECT * FROM supporter WHERE email = ? AND id <> ?',[email, id], function(err, rows){
@@ -132,8 +134,8 @@ app.post('/supporter/edit', function(req, res){
 						res.redirect('/supporter/edit');
 					}
 					else{
-						conn.query('UPDATE supporter SET name=?, gender=? email=?, phone=?, type=?  WHERE id=?',[fullname, gender, email, phone, type, id], function(erri, result){
-							if(erri) throw console.log('Loi 3');
+						conn.query('UPDATE supporter SET name=?, gender=?, email=?, phone=?, type=?  WHERE id=?',[fullname, gender, email, phone, type, id], function(erri, result){
+							if(erri) throw erri;
 							console.log('Updated a new supporter');
 							res.redirect('/supporter/show');
 						});
@@ -199,11 +201,33 @@ app.get('/chathistory/deleteall', function(req, res){
 		res.redirect('/chathistory/show');
 	});
 });
+app.get('/rate/show', function(req, res){
 
+	conn.query('SELECT * FROM rate',[], function(err, rows){
+		if(err) throw err;
+		res.render('rate/show', {title: 'Show list rate', data: rows});
+	});
+});
+
+app.get('/rate/delete', function(req, res){
+	var id = req.query.id;
+	conn.query('DELETE FROM rate WHERE id = ?',[id], function(err, rows){
+		if(err) throw err;
+		res.redirect('/rate/show');
+	});
+});
+app.get('/rate/deleteall', function(req, res){
+	conn.query('DELETE FROM rate ',[], function(err, rows){
+		if(err) throw err;
+		res.redirect('/rate/show');
+	});
+});
+//=================== CHAT PROCESS =====================
+//khoi tao server
 server.listen(port, function(){
 	console.log('Server running at http://localhost:%d ....', port);
 });
-
+// bat dau knoi
 io.on('connection', function(socket){
 	//Begin connect
 	console.log('Client connected.');
@@ -228,6 +252,7 @@ io.on('connection', function(socket){
 		var roomname = data.username+' - '+type;
 		rooms.push(roomname);
 		socket.join(roomname);
+		socket.room = roomname;
 		socket.emit('updatechat', data.msg, roomname, data.username);
 		socket.broadcast.emit('updaterooms', rooms);
 	});
@@ -265,6 +290,7 @@ io.on('connection', function(socket){
 		socket.emit('updaterooms2', rooms, newroom);
 	});
 	socket.on('clientMsg', function(msg, name){
+		console.log(msg);
 		socket.broadcast.to(socket.room).emit('clientMsg', msg, name);
 	});	
 	socket.on('sendchat', function(msg, name, id, type){
@@ -273,13 +299,14 @@ io.on('connection', function(socket){
 			type: type,
 			message: msg
 		};
+		console.log(data);
 		conn.query('INSERT INTO chathistory SET ? ', data, function(err, res){
 			if(err) throw err;
 			console.log('Inserted to chat history');
 		});	
 
 		socket.broadcast.to(socket.room).emit('message', msg, name);
-		console.log('Send chat');
+		console.log('Send chat '+socket.room);
 	});
 
 	socket.on('endChat', function(room){
